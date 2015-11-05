@@ -1,0 +1,22 @@
+.boxWrapper {
+	
+}
+
+.row {
+	display: flex; 
+}
+
+.cell {
+	height: 40px;
+	width: 40px; 
+	background: #FEC0FF; 
+	margin: 5px;
+	border: 1px solid black; 
+	text-align: center;
+	cursor: default;
+}
+
+.cell:hover {
+	background-color: green;
+}
+
