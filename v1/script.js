@@ -50,7 +50,8 @@
 
 				//push to created array at hIndex
 					//either push a cell with or without a mine 
-				if (minesAvaliable) {
+				if (minesAvaliable > 0) {
+					console.log('push')
 					board[hIndex].push({
 						row: hIndex + 1,
 						column: wIndex + 1,
@@ -83,13 +84,12 @@
 		MINESWEEPER.DATA.board.forEach(function(row){
 			var $row = $('<div class="row"></div>'); //create div for each element
 			row.forEach(function(cell){ // loop through each element in the 'row' array (which isnt defined)
-				var $cell = $('<div class="cell" column="' + cell.column + '"row="' + cell.row + '"></div>'); 
+				var $cell = $('<div class="cell" data-column="' + cell.column + '"data-row="' + cell.row + '"></div>'); 
 				$row.append($cell); 
 			}); 
 			$board.append($row);
 
 		});	
-
 	};
 
 	MINESWEEPER.RENDER.paintBoard = function($board) {
@@ -98,30 +98,21 @@
 		MINESWEEPER.DATA.board.forEach(function(row){
 			row.forEach(function(cell){
 
-
-				//get cell coordinates
 				//get corresponding cell 
+				var $cell = $('.row:nth-child(' + cell.row + ')').children('[data-column=' + cell.column + ']');  
 
-				//conditional would be if target only x and y selectors 
-					//maybe sleectors should be in one attribute 
-						//to target the jQuery easier 
+				//get cell contents 
+				var cellText = cell.row + ', ' + cell.column; 
+				if (cell.mine) {
+					cellText += '<br />*'; 
+				}
 
+				//put cell contents inside cell 
+				$cell.html(cellText); 
 				
-
-
-				// var cellText = cell.row + ', ' + cell.column; 
-				// if (cell.mine) {
-				// 	cellText += '<br />*'; 
-				// }
-				// $cell.html(cellText); 
-			});
-
-
-			console.log('row----')
+			}); 
+			console.log('row----') 
 		});
-
-
-
 		
 	};
 
@@ -130,13 +121,11 @@
 	};
 
 	MINESWEEPER.EVENTS.init = function(board, w, h, mines) {
-		var $board = $(board);
-
+		var $board = $(board); 
 		MINESWEEPER.DATA.populateBoard(w, h, mines); 
 		MINESWEEPER.RENDER.drawBoard($board);
 		MINESWEEPER.RENDER.paintBoard($board);
-		MINESWEEPER.EVENTS.registerCellClicks($board); 
-
+		MINESWEEPER.EVENTS.registerCellClicks($board);
 	}; 
 
 	window.MINESWEEPER = MINESWEEPER;
