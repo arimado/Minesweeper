@@ -1,18 +1,3 @@
-// $(document).ready(function() {
-	
-// 	function renderBoard(width, height) {
-// 		var totalGrid = width * height; 
-
-
-// 		$("#boxWrapper").append('<div class="box"></div>');  
-
-// 	}
-
-// })
-
-
-
-
 (function () {
 
 	var MINESWEEPER = {};
@@ -66,8 +51,6 @@
 					});	
 				} 
 
-
-
 			}
 
 		} 
@@ -75,7 +58,6 @@
 	};
 
 	MINESWEEPER.DATA.updateCell = function() {
-		
 	};
 
 	MINESWEEPER.RENDER.drawBoard = function($board) {
@@ -87,8 +69,7 @@
 				var $cell = $('<div class="cell" data-column="' + cell.column + '"data-row="' + cell.row + '"></div>'); 
 				$row.append($cell); 
 			}); 
-			$board.append($row);
-
+			$board.append($row); 
 		});	
 	};
 
@@ -106,10 +87,8 @@
 				if (cell.mine) {
 					cellText += '<br />*'; 
 				}
-
 				//put cell contents inside cell 
 				$cell.html(cellText); 
-				
 			}); 
 			console.log('row----') 
 		});
@@ -133,11 +112,6 @@
 }());
 
 MINESWEEPER.EVENTS.init('#game1', 9, 6, 20); 
-
-
-
-
-
 
 
 
