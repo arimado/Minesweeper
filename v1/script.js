@@ -53,16 +53,21 @@
 			} 
 		} 
 
-		MINESWEEPER.DATA.detectMines(board)
+		MINESWEEPER.DATA.detectMines(board, w, h)
 
 	};
 
-	MINESWEEPER.DATA.detectMines = function(board) {
+	MINESWEEPER.DATA.detectMines = function(board, w, h) {
 		board.forEach(function(row) {
 			row.forEach(function(cell) {
+				if((cell.column > 1 && cell.column < w) && (cell.row > 1 && cell.row < h)) {
+					
+					console.log(cell.column + ' ' + cell.row + ' ||| ' + cell.column-1 + ' ' + cell.row-1)
 
-				// var topLeftCell = board[cell.column-1][cell.row-1];  
-				// console.log('the topLeftCell to - ' + cell.column + ' ' + cell.row + ' - is - ' + cell.column-1 + ' ' + cell.row-1); 
+					// var topLeftCell = board[cell.column-1][cell.row-1];  
+					// console.log('the topLeftCell to - ' + cell.column + ' ' + cell.row + ' - is - ' + cell.column-1 + ' ' + cell.row-1); 
+				}
+				
 			})
 		})
 	}
@@ -95,7 +100,7 @@
 				var $cell = $('.row:nth-child(' + cell.row + ')').children('[data-column=' + cell.column + ']');  
 
 				//get cell contents 
-				var cellText = cell.row + ', ' + cell.column; 
+				var cellText = cell.column + ', ' + cell.row; 
 				if (cell.mine) {
 					cellText += '<br />*'; 
 				}
