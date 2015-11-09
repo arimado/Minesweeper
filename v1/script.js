@@ -62,11 +62,29 @@
 			row.forEach(function(cell) {
 				if((cell.column > 1 && cell.column < w) && (cell.row > 1 && cell.row < h)) {
 					
-					console.log(cell.column + ' ' + cell.row + ' ||| ' + cell.column-1 + ' ' + cell.row-1)
+					console.log('coors - ' + cell.column + ' ' + cell.row);
+
+					console.log('coorx - ' + (cell.column - 1) + ' ' + (cell.row - 1)); 
 
 					// var topLeftCell = board[cell.column-1][cell.row-1];  
-					// console.log('the topLeftCell to - ' + cell.column + ' ' + cell.row + ' - is - ' + cell.column-1 + ' ' + cell.row-1); 
+					// console.log('the topLeftCell to - ' + cell.column + ' ' + cell.row + ' - is - ' + cell.column-1 + ' ' + cell.row-1);
 				}
+
+				//detect mines function
+				//get all cells around cell
+					//relative to coordinate 
+
+					//add the mine to a counter somehow 
+						//have a counter on top of a stack of if statments
+							//than incerement whenever an if satisify's a value 
+								//than add it to the counter 
+
+					//if cell column width or cell height is = 0 or is greater than the limits than dont count them 
+
+
+
+
+				//if on edge the 
 				
 			})
 		})
