@@ -31,7 +31,7 @@
 				//create array at start of index 
 				if (wIndex === 0) {
 					board[hIndex] = [];
-				}
+				} 
 
 				//push to created array at hIndex
 					//either push a cell with or without a mine 
@@ -49,15 +49,16 @@
 						column: wIndex + 1,
 						mine: false
 					});	
-				} 
-
-			}
-
+				}  
+			} 
 		} 
 
 	};
 
 	MINESWEEPER.DATA.updateCell = function() {
+
+		// 
+
 	};
 
 	MINESWEEPER.RENDER.drawBoard = function($board) {
