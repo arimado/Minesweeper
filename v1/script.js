@@ -24,7 +24,6 @@
 
 		// Fo each row - this loops h times 
 		for(var hIndex = 0; hIndex < h; hIndex++) {
-
 			//Fo each cell in row - this loops w times
 			for(var wIndex = 0; wIndex < w; wIndex++) {
 
@@ -42,6 +41,7 @@
 						column: wIndex + 1,
 						mine: Math.random() > 0.5 //creates boolean value because of the greater than operator 
 					});	
+
 					minesAvaliable--;
 				} else {
 					board[hIndex].push({
@@ -49,11 +49,23 @@
 						column: wIndex + 1,
 						mine: false
 					});	
-				}  
+				} 
 			} 
 		} 
 
+		MINESWEEPER.DATA.detectMines(board)
+
 	};
+
+	MINESWEEPER.DATA.detectMines = function(board) {
+		board.forEach(function(row) {
+			row.forEach(function(cell) {
+
+				// var topLeftCell = board[cell.column-1][cell.row-1];  
+				// console.log('the topLeftCell to - ' + cell.column + ' ' + cell.row + ' - is - ' + cell.column-1 + ' ' + cell.row-1); 
+			})
+		})
+	}
 
 	MINESWEEPER.DATA.updateCell = function() {
 
@@ -71,12 +83,11 @@
 				$row.append($cell); 
 			}); 
 			$board.append($row); 
-		});	
+		});	 
 	};
 
 	MINESWEEPER.RENDER.paintBoard = function($board) {
 		// Celltext belongs in the paint function!
-
 		MINESWEEPER.DATA.board.forEach(function(row){
 			row.forEach(function(cell){
 
