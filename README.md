@@ -4,11 +4,11 @@ Minesweeper is a game created with the Sydney Javascript Study Group http://www.
 
 #Stages
 
-~~1. Create program structure~~
+1. ~~Create program structure~~
 
-~~2. populateBoard: Create data structure~~
+2. ~~populateBoard: Create data structure~~
 
-~~3. paintBoard: Show dummy data for development~~ 
+3. ~~paintBoard: Show dummy data for development~~ 
 
 4. populateBoard: Add function that calculates how many mines a particular cell is touching
 
