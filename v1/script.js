@@ -39,7 +39,8 @@
 					board[hIndex].push({
 						row: hIndex + 1,
 						column: wIndex + 1,
-						mine: Math.random() > 0.5 //creates boolean value because of the greater than operator 
+						mine: Math.random() > 0.5, //creates boolean value because of the greater than operator
+						sensor: 0
 					});	
 
 					minesAvaliable--;
@@ -58,17 +59,60 @@
 	};
 
 	MINESWEEPER.DATA.detectMines = function(board, w, h) {
-		board.forEach(function(row) {
-			row.forEach(function(cell) {
-				if((cell.column > 1 && cell.column < w) && (cell.row > 1 && cell.row < h)) {
-					
-					console.log('coors - ' + cell.column + ' ' + cell.row);
+		board.forEach(function(row, rowIndex) {
+			row.forEach(function(cell, columnIndex) {
 
-					console.log('coorx - ' + (cell.column - 1) + ' ' + (cell.row - 1)); 
+				//Get coordinates of adjacent cells 
 
-					// var topLeftCell = board[cell.column-1][cell.row-1];  
-					// console.log('the topLeftCell to - ' + cell.column + ' ' + cell.row + ' - is - ' + cell.column-1 + ' ' + cell.row-1);
-				}
+				var x = cell.column; 
+				var y = cell.row; 
+
+				var topLeftCellCoordinate = {column: x - 1, row: y - 1}; 
+				var topMidCellCoordinate = {column: x, row: y - 1}; 
+				var topRightCellCoordinate = {column:  x + 1, row: y - 1};
+
+				var midLeftCellCoordinate = {column: x - 1, row: y}; 
+				var midRightCellCoordinate = {column: x, row: y}; 
+
+				var botLeftCellCoordinate = {column: x - 1, row: y + 1}; 
+				var botMidCellCoordinate = {column: x, row: y + 1}; 
+				var botRightCellCoordinate = {column: x + 1, row: y + 1}; 
+
+				//Check if cell is out of bounds
+				var adjacentCells = [	topLeftCellCoordinate, 
+										topMidCellCoordinate, 
+										topRightCellCoordinate, 
+										midLeftCellCoordinate, 
+										midRightCellCoordinate,
+										botLeftCellCoordinate,
+										botMidCellCoordinate,
+										botRightCellCoordinate
+									]; 
+				
+				console.log('Adjecent cells to ' + x + ',' + y); 
+
+				adjacentCells.forEach(function(cell, currentIndex, currentAdjacentCells){
+	
+				//if out of bounds 
+				if(cell.column <= 0 || cell.row <= 0) {
+						currentAdjacentCells[currentIndex] = 0;
+					} else if (cell.column > w || cell.row > h) {
+						currentAdjacentCells[currentIndex] = 0;
+					} else {
+						currentAdjacentCells[currentIndex] = 1;
+					}
+
+				}); 
+
+				//incerement array values and ad to sensor variable 
+
+
+
+				
+
+				
+
+
 
 				//detect mines function
 				//get all cells around cell
@@ -81,10 +125,10 @@
 
 					//if cell column width or cell height is = 0 or is greater than the limits than dont count them 
 
-
-
-
 				//if on edge the 
+
+
+
 				
 			})
 		})
@@ -126,8 +170,7 @@
 				$cell.html(cellText); 
 			}); 
 			console.log('row----') 
-		});
-		
+		}); 
 	};
 
 	MINESWEEPER.EVENTS.registerCellClicks = function() {
