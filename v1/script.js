@@ -101,33 +101,20 @@
 					} else {
 						currentAdjacentCells[currentIndex] = 1;
 					}
-
 				}); 
 
 				//incerement array values and ad to sensor variable 
+				var counter = 0; 
 
+				adjacentCells.forEach(function(cell){
+					
+					console.log(counter + cell); 
 
+				});
 
-				
+				console.log(counter); 
 
-				
-
-
-
-				//detect mines function
-				//get all cells around cell
-					//relative to coordinate 
-
-					//add the mine to a counter somehow 
-						//have a counter on top of a stack of if statments
-							//than incerement whenever an if satisify's a value 
-								//than add it to the counter 
-
-					//if cell column width or cell height is = 0 or is greater than the limits than dont count them 
-
-				//if on edge the 
-
-
+				board[rowIndex][columnIndex].sensor = counter; 
 
 				
 			})
@@ -162,7 +149,7 @@
 				var $cell = $('.row:nth-child(' + cell.row + ')').children('[data-column=' + cell.column + ']');  
 
 				//get cell contents 
-				var cellText = cell.column + ', ' + cell.row; 
+				var cellText = cell.column + ', ' + cell.row + ' ' + '[' + cell.sensor + ']'; 
 				if (cell.mine) {
 					cellText += '<br />*'; 
 				}
