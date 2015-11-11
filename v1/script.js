@@ -97,7 +97,7 @@
 
 	MINESWEEPER.DATA.updateCell = function() {
 
-		// 
+		//lol 
 
 	};
 
