@@ -14,13 +14,14 @@
 	MINESWEEPER.DATA.board = [];
 
 	MINESWEEPER.UTIL = {};
+	
 	MINESWEEPER.UTIL.random = function(min, max) {
 	    if (max == null) {
 	      max = min;
 	      min = 0;
 	    }
 	    return min + Math.floor(Math.random() * (max - min + 1));
-	  };
+  	};
 
 	MINESWEEPER.DATA.populateBoard = function(w, h, mines) {
 
@@ -147,17 +148,37 @@
 			var row = parseInt($cell.data('row'), 10);
 			var column = parseInt($cell.data('column'), 10);
 
-			var cell = MINESWEEPER.DATA.board[row - 1][column - 1];
+			var cell = MINESWEEPER.DATA.board[row - 1][column - 1];  
+			//why does this not work with $board but it does with MINESWEEPER.DATA.board? 
+			//becuase $board is a jquery object not the data object 
 
 			var tempString = cell.column + ' : ' + cell.row;
 			if (cell.mine) {
-				tempString += '  mine!!!!';
+				tempString += '  mine!!!!'; 
 			}
 
-			console.log(tempString);
+			console.log(tempString); 
+
+			//activete
+
 		});
 
+
 	};
+
+	MINESWEEPER.EVENTS.sweepMines = function() {
+
+		//get cell thats clicked
+		//objective: reveal a bunch of empty cells around it 
+			//needs to be within bounds
+			//cant reveal mines
+			//cell clicked needs to be the
+
+		//solutions 
+			//get cell 
+			//a a
+
+	}
 
 	MINESWEEPER.EVENTS.init = function(board, w, h, mines) {
 		var $board = $(board); 
