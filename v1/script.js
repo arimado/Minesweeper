@@ -13,6 +13,15 @@
 
 	MINESWEEPER.DATA.board = [];
 
+	MINESWEEPER.UTIL = {};
+	MINESWEEPER.UTIL.random = function(min, max) {
+	    if (max == null) {
+	      max = min;
+	      min = 0;
+	    }
+	    return min + Math.floor(Math.random() * (max - min + 1));
+	  };
+
 	MINESWEEPER.DATA.populateBoard = function(w, h, mines) {
 
 		var board = MINESWEEPER.DATA.board;
@@ -20,7 +29,6 @@
 		MINESWEEPER.DATA.w = w;
 		MINESWEEPER.DATA.h = h;
 		MINESWEEPER.DATA.mines = mines;
-		var minesAvaliable = w * h;
 
 		// Fo each row - this loops h times 
 		for(var hIndex = 0; hIndex < h; hIndex++) {
@@ -30,93 +38,59 @@
 				//create array at start of index 
 				if (wIndex === 0) {
 					board[hIndex] = [];
-				} 
-
-				//push to created array at hIndex
-					//either push a cell with or without a mine 
-				if (minesAvaliable > 0) {
-					console.log('push')
-					board[hIndex].push({
-						row: hIndex + 1,
-						column: wIndex + 1,
-						mine: Math.random() > 0.5, //creates boolean value because of the greater than operator
-						sensor: 0
-					});	
-
-					minesAvaliable--;
-				} else {
-					board[hIndex].push({
-						row: hIndex + 1, 
-						column: wIndex + 1,
-						mine: false
-					});	
-				} 
+				}
+				
+				board[hIndex].push({
+					row: hIndex + 1, 
+					column: wIndex + 1,
+					mine: false,
+					sensor: 0,
+					open: false
+				});	
 			} 
 		} 
-
+		MINESWEEPER.DATA.populatMines(board, mines, w, h);
 		MINESWEEPER.DATA.detectMines(board, w, h)
 
+	};
+
+	MINESWEEPER.DATA.populatMines = function(board, mines, w, h) {
+		while (mines) {
+			var row = MINESWEEPER.UTIL.random(1, h);
+			var column = MINESWEEPER.UTIL.random(1, w);
+			board[row -1][column -1].mine = true;
+			mines--;
+		}
 	};
 
 	MINESWEEPER.DATA.detectMines = function(board, w, h) {
 		board.forEach(function(row, rowIndex) {
 			row.forEach(function(cell, columnIndex) {
 
-				//Get coordinates of adjacent cells 
+				// Create a grid surrounding this cell
 
-				var x = cell.column; 
-				var y = cell.row; 
+				// Get boundaries
+				var rowStart = (cell.row > 1) ?  cell.row - 1 : 1;
+				var rowEnd = (cell.row < h) ?  cell.row + 1 : h;
 
-				var topLeftCellCoordinate = {column: x - 1, row: y - 1}; 
-				var topMidCellCoordinate = {column: x, row: y - 1}; 
-				var topRightCellCoordinate = {column:  x + 1, row: y - 1};
+				var columnStart = (cell.column > 1) ? cell.column - 1 : 1;
+				var columnEnd = (cell.column < w) ? cell.column + 1 : w;
 
-				var midLeftCellCoordinate = {column: x - 1, row: y}; 
-				var midRightCellCoordinate = {column: x, row: y}; 
+				var mineCount = 0;
 
-				var botLeftCellCoordinate = {column: x - 1, row: y + 1}; 
-				var botMidCellCoordinate = {column: x, row: y + 1}; 
-				var botRightCellCoordinate = {column: x + 1, row: y + 1}; 
-
-				//Check if cell is out of bounds
-				var adjacentCells = [	topLeftCellCoordinate, 
-										topMidCellCoordinate, 
-										topRightCellCoordinate, 
-										midLeftCellCoordinate, 
-										midRightCellCoordinate,
-										botLeftCellCoordinate,
-										botMidCellCoordinate,
-										botRightCellCoordinate
-									]; 
-				
-				console.log('Adjecent cells to ' + x + ',' + y); 
-
-				adjacentCells.forEach(function(cell, currentIndex, currentAdjacentCells){
-	
-				//if out of bounds 
-				if(cell.column <= 0 || cell.row <= 0) {
-						currentAdjacentCells[currentIndex] = 0;
-					} else if (cell.column > w || cell.row > h) {
-						currentAdjacentCells[currentIndex] = 0;
-					} else {
-						currentAdjacentCells[currentIndex] = 1;
+				// Loop through grid with boundaries
+				for (var rowNum = rowStart; rowNum <= rowEnd; rowNum++) { 
+					for (var column = columnStart; column <= columnEnd; column++) {
+						if (rowNum === cell.row && column === cell.column) {
+							continue; // Ignore if same cell
+						}
+						if (board[rowNum -1][column - 1].mine) {
+							mineCount += 1;
+						}
 					}
-				}); 
+				}
 
-				//incerement array values and ad to sensor variable 
-				var counter = 0; 
-
-				adjacentCells.forEach(function(cell){
-					
-					console.log(counter + cell); 
-
-				});
-
-				console.log(counter); 
-
-				board[rowIndex][columnIndex].sensor = counter; 
-
-				
+				cell.sensor = mineCount;	
 			})
 		})
 	}
@@ -145,22 +119,43 @@
 		MINESWEEPER.DATA.board.forEach(function(row){
 			row.forEach(function(cell){
 
-				//get corresponding cell 
-				var $cell = $('.row:nth-child(' + cell.row + ')').children('[data-column=' + cell.column + ']');  
+				//get corresponding cell
+
+				var $cell = $('[data-row="' + cell.row + '"][data-column=' + cell.column + ']');
 
 				//get cell contents 
-				var cellText = cell.column + ', ' + cell.row + ' ' + '[' + cell.sensor + ']'; 
+				var cellText = cell.column + ', ' + cell.row;
 				if (cell.mine) {
 					cellText += '<br />*'; 
 				}
 				//put cell contents inside cell 
-				$cell.html(cellText); 
+				$cell.html(cellText);
+
+				if (cell.sensor > 0) {
+					$cell.attr('data-sensor', cell.sensor);
+				}
 			}); 
 			console.log('row----') 
 		}); 
 	};
 
-	MINESWEEPER.EVENTS.registerCellClicks = function() {
+	MINESWEEPER.EVENTS.registerCellClicks = function($board) {
+
+		$board.on('click', '.cell', function () {
+			var $cell = $(this);
+
+			var row = parseInt($cell.data('row'), 10);
+			var column = parseInt($cell.data('column'), 10);
+
+			var cell = MINESWEEPER.DATA.board[row - 1][column - 1];
+
+			var tempString = cell.column + ' : ' + cell.row;
+			if (cell.mine) {
+				tempString += '  mine!!!!';
+			}
+
+			console.log(tempString);
+		});
 
 	};
 
@@ -176,7 +171,7 @@
 
 }());
 
-MINESWEEPER.EVENTS.init('#game1', 9, 6, 20); 
+MINESWEEPER.EVENTS.init('#game1', 9, 9, 20); 
 
 
 
