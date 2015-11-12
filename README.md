@@ -11,10 +11,16 @@ yuh!
 - [x] **Create program structure**
 - [x] **populateBoard**: Create data structure
 - [x] **paintBoard**: Show dummy data for development
-- [ ] **populateBoard**: Add function that calculates how many mines a particular cell is touching
+- [x] **populateBoard**: Add function that calculates how many mines a particular cell is touching
 - [ ] **registerCellClicks / updateCell**: On each click, change isClicked property to true. 
+- [ ] **sweepAdacentCells** / 
 - [ ] **updateCell / paintBoard**: onClick, show number of mines around cell.
 - [ ] **updateCell / paintBoard**: onClick, show click state, log to console if you hit a mine
 - [ ] **updateCell / paintBoard**: add Lose/Win functions 
+
+## Notes
+
+#
+
 
 
