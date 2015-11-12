@@ -158,8 +158,7 @@
 			}
 
 			console.log(tempString); 
-
-			//activete
+			//pass the cell into a sweepMines function 
 
 		});
 
@@ -169,16 +168,20 @@
 	MINESWEEPER.EVENTS.sweepMines = function() {
 
 		//get cell thats clicked
-		//objective: reveal a bunch of empty cells around it 
+		//objective: reveal a random bunch of empty cells around it 
 			//needs to be within bounds
 			//cant reveal mines
 			//cell clicked needs to be the
 
-		//solutions 
-			//get cell 
-			//a a
-
+		//get data-cell thats clicked
+			//we'll get a random bunch of cells around it
+				//we can modify the detectMines function increase/randomise the bounds to make it look for cells without mines instead 
+					//this is the hardest i reckon 
+				//there needs to be a reveal property
 	}
+
+
+	
 
 	MINESWEEPER.EVENTS.init = function(board, w, h, mines) {
 		var $board = $(board); 
