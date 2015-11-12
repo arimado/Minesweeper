@@ -90,29 +90,29 @@
 									]; 
 				
 				console.log('Adjecent cells to ' + x + ',' + y); 
+				console.log(adjacentCells); 
 
 				adjacentCells.forEach(function(cell, currentIndex, currentAdjacentCells){
-	
-				//if out of bounds 
-				if(cell.column <= 0 || cell.row <= 0) {
+		
+
+					//if out of bounds 
+					if(cell.column <= 0 || cell.row <= 0) {
 						currentAdjacentCells[currentIndex] = 0;
 					} else if (cell.column > w || cell.row > h) {
 						currentAdjacentCells[currentIndex] = 0;
 					} else {
 						currentAdjacentCells[currentIndex] = 1;
 					}
+
 				}); 
 
 				//incerement array values and ad to sensor variable 
 				var counter = 0; 
 
 				adjacentCells.forEach(function(cell){
-					
 					console.log(counter + cell); 
-
+					counter = counter + cell;
 				});
-
-				console.log(counter); 
 
 				board[rowIndex][columnIndex].sensor = counter; 
 
