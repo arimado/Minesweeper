@@ -68,6 +68,7 @@
 		board.forEach(function(row, rowIndex) {
 			row.forEach(function(cell, columnIndex) {
 
+
 				// Create a grid surrounding this cell
 
 				// Get boundaries
@@ -75,11 +76,8 @@
 				var rowEnd = (cell.row < h) ?  cell.row + 1 : h;
 
 				var columnStart = (cell.column > 1) ? cell.column - 1 : 1;
-				var columnEnd = (cell.column < w) ? cell.column + 1 : w;
+				var columnEnd = (cell.column < w) ? cell.column + 1 : w;		
 
-<<<<<<< HEAD
-			
-=======
 				var mineCount = 0;
 
 				// Loop through grid with boundaries
@@ -92,8 +90,7 @@
 							mineCount += 1;
 						}
 					}
-				}
->>>>>>> 099fef927f348dd3083a8362ebffd967b8b3a9f7
+				} 
 
 				cell.sensor = mineCount;	
 			})
@@ -129,7 +126,7 @@
 				var $cell = $('[data-row="' + cell.row + '"][data-column=' + cell.column + ']');
 
 				//get cell contents 
-				var cellText = cell.column + ', ' + cell.row;
+				var cellText = 'c' +  cell.column + ', r' + cell.row;
 				if (cell.mine) {
 					cellText += '<br />*'; 
 				}
@@ -162,10 +159,9 @@
 			}
 
 			console.log(tempString); 
-			//pass the cell into a sweepMines function 
+			//pass the cell into a sweepMines function  
 
-		});
-
+		}); 
 
 	};
 
@@ -182,10 +178,11 @@
 				//we can modify the detectMines function increase/randomise the bounds to make it look for cells without mines instead 
 					//this is the hardest i reckon 
 				//there needs to be a reveal property
+
+				
+
+
 	}
-
-
-	
 
 	MINESWEEPER.EVENTS.init = function(board, w, h, mines) {
 		var $board = $(board); 
