@@ -161,17 +161,33 @@
 			console.log(tempString); 
 			//pass the cell into a sweepMines function  
 
+			MINESWEEPER.EVENTS.sweepMines(cell); 
+
 		}); 
 
 	};
 
-	MINESWEEPER.EVENTS.sweepMines = function() {
+	MINESWEEPER.EVENTS.sweepMines = function(cell) {
 
-		//get cell thats clicked
 		//objective: reveal a random bunch of empty cells around it 
 			//needs to be within bounds
-			//cant reveal mines
-			//cell clicked needs to be the
+			//cant reveal mines	
+
+
+		//get cell that is clicked on board 
+		//search cells around it
+			//ignore mines
+		//activate clicked state value 
+
+		console.log('sweepMines');
+		console.log(cell);
+
+		
+
+
+
+
+
 
 		//get data-cell thats clicked
 			//we'll get a random bunch of cells around it
@@ -179,7 +195,11 @@
 					//this is the hardest i reckon 
 				//there needs to be a reveal property
 
-				
+
+
+
+
+
 
 
 	}
