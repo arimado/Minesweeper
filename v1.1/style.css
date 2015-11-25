@@ -1,0 +1,33 @@
+.boxWrapper {
+	
+}
+
+.row {
+	display: flex; 
+}
+
+.cell {
+	position: relative;
+	height: 40px;
+	width: 40px; 
+	padding: 5px;
+	background: white; 
+	margin: 5px;
+	border: 1px solid black; 
+	text-align: center;
+	cursor: default;
+}
+
+.cell:hover {
+	background-color: green;
+}
+
+[data-sensor]:after {
+	position: absolute;
+	color: red;
+	content: attr(data-sensor);
+	bottom: 0px;
+	right: 4px;
+}
+
+
