@@ -115,6 +115,8 @@
 				// Loop through grid with boundaries
 					//this two dimensional loop will only ever loop through coordinates within the detect mines boundaries
 
+				//adds a mine count t
+
 				for (var rowNum = rowStart; rowNum <= rowEnd; rowNum++) { 
 					for (var column = columnStart; column <= columnEnd; column++) {
 
@@ -123,9 +125,19 @@
 							continue; // Ignore if same cell
 						}
 
+						//adds to mine count 
+
 						if (board[rowNum -1][column - 1].mine) {
 							mineCount += 1;
 						}
+
+						//what if i had a data set that could group objects togethe like the mine count 
+
+						// ----------------------------------
+
+						// ----------------------------------
+
+
 					}
 				} 
 
@@ -162,7 +174,9 @@
 				var $cell = $('[data-row="' + cell.row + '"][data-column=' + cell.column + ']');
 
 				//get cell contents 
-				var cellText = 'c' +  cell.column + ', r' + cell.row;
+				// var cellText = 'c' +  cell.column + ', r' + cell.row;
+
+				 var cellText = '';
 				if (cell.mine) {
 					cellText += '<br />*'; 
 				}
@@ -219,11 +233,9 @@
 		console.log('sweepMines'); 
 		console.log(cell); 
 
-		
+		// ------------------------------------------------------------
 
-
-
-
+		// ------------------------------------------------------------
 
 		//get data-cell thats clicked
 			//we'll get a random bunch of cells around it

@@ -10,7 +10,8 @@
 	position: relative;
 	height: 40px;
 	width: 40px; 
-	background: #FEC0FF; 
+	padding: 5px;
+	background: white; 
 	margin: 5px;
 	border: 1px solid black; 
 	text-align: center;
@@ -28,3 +29,5 @@
 	bottom: 0px;
 	right: 4px;
 }
+
+
