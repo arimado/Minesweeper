@@ -2,25 +2,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 (function () {
 
 	var MINESWEEPER = {};
@@ -78,7 +59,9 @@
 		} 
 
 		MINESWEEPER.DATA.populatMines(board, mines, w, h);
-		MINESWEEPER.DATA.detectMines(board, w, h)
+		MINESWEEPER.DATA.detectMines(board, w, h);
+		MINESWEEPER.DATA.sweepMines(board, w, h);
+
 
 	};
 
@@ -95,60 +78,79 @@
 
 	};
 
+	MINESWEEPER.DATA.checkAdjacentMines = function(board, cell, w, h, cellProperty, ruleFunction) {
+		// Create a grid surrounding this cell
+
+		// Get boundaries
+		var rowStart = (cell.row > 1) ?  cell.row - 1 : 1;
+		var rowEnd = (cell.row < h) ?  cell.row + 1 : h;
+
+		var columnStart = (cell.column > 1) ? cell.column - 1 : 1;
+		var columnEnd = (cell.column < w) ? cell.column + 1 : w;		
+
+		var cellCount = 0;
+
+		// Loop through grid with boundaries
+			//this two dimensional loop will only ever loop through coordinates within the detect mines boundaries
+
+		//adds a mine count t
+
+		for (var rowNum = rowStart; rowNum <= rowEnd; rowNum++) { 
+			for (var column = columnStart; column <= columnEnd; column++) {
+
+				//checks if same cell 
+				if (rowNum === cell.row && column === cell.column) {
+					continue; // Ignore if same cell
+				}
+
+				//adds to mine count 
+				if(ruleFunction(board, cell, rowNum, column, cellProperty)) {
+					cellCount += 1;
+				}
+			}
+		} 
+		return cellCount;	
+
+	}; 
+
 	MINESWEEPER.DATA.detectMines = function(board, w, h) {
+
+		var rules = function(board, cell, rowNum, column, cellProperty) {
+			if (board[rowNum -1][column - 1][cellProperty]) {
+				return true;
+			} else {
+				return false; 
+			}
+		}
 
 		board.forEach(function(row, rowIndex) {
 			row.forEach(function(cell, columnIndex) {
-
-
-				// Create a grid surrounding this cell
-
-				// Get boundaries
-				var rowStart = (cell.row > 1) ?  cell.row - 1 : 1;
-				var rowEnd = (cell.row < h) ?  cell.row + 1 : h;
-
-				var columnStart = (cell.column > 1) ? cell.column - 1 : 1;
-				var columnEnd = (cell.column < w) ? cell.column + 1 : w;		
-
-				var mineCount = 0;
-
-				// Loop through grid with boundaries
-					//this two dimensional loop will only ever loop through coordinates within the detect mines boundaries
-
-				//adds a mine count t
-
-				for (var rowNum = rowStart; rowNum <= rowEnd; rowNum++) { 
-					for (var column = columnStart; column <= columnEnd; column++) {
-
-						//checks if same cell 
-						if (rowNum === cell.row && column === cell.column) {
-							continue; // Ignore if same cell
-						}
-
-						//adds to mine count 
-
-						if (board[rowNum -1][column - 1].mine) {
-							mineCount += 1;
-						}
-
-						//what if i had a data set that could group objects togethe like the mine count 
-
-						// ----------------------------------
-
-						// ----------------------------------
-
-
-					}
-				} 
-
-				cell.sensor = mineCount;	
-			})
-		})
+				cell.sensor = MINESWEEPER.DATA.checkAdjacentMines(board, cell, w, h, 'mine', rules); 
+			});
+		});
 	}
 
-	MINESWEEPER.DATA.updateCell = function() {
+	MINESWEEPER.DATA.sweepMines = function(board, w, h) {
 
-		//lol 
+	
+		var rules = function(board, cell, rowNum, column, cellProperty) {
+			if (board[rowNum -1][column - 1][cellProperty]) {
+				return true;
+			} else {
+				return false; 
+			}
+		}
+
+		board.forEach(function(row, rowIndex) {
+			row.forEach(function(cell, columnIndex) {
+				cell.sensor = MINESWEEPER.DATA.checkAdjacentMines(board, cell, w, h, 'mine', rules);
+			});
+		});
+
+	}
+
+
+	MINESWEEPER.DATA.updateCell = function() {
 
 	};
 
@@ -213,39 +215,6 @@
 			MINESWEEPER.EVENTS.sweepMines(cell); 
 		}); 
 	};
-
-	MINESWEEPER.EVENTS.sweepMines = function(cell) {
-
-		var board = MINESWEEPER.DATA.board; 
-
-		//objective: reveal a random bunch of empty cells around it 
-			//needs to be within bounds
-			//cant reveal mines	
-
-
-		//get cell that is clicked on board 
-		//search cells around it
-			//ignore mines
-		//activate clicked state value 
-
-		console.log('sweepMines'); 
-		console.log(cell); 
-
-		// ------------------------------------------------------------
-
-
-
-		// ------------------------------------------------------------
-
-		//get data-cell thats clicked
-			//we'll get a random bunch of cells around it
-				//we can modify the detectMines function increase/randomise the bounds to make it look for cells without mines instead 
-					//this is the hardest i reckon 
-				//there needs to be a reveal property
-
-
-
-	}
 
 	MINESWEEPER.EVENTS.init = function(board, w, h, mines) {
 		var $board = $(board); 
