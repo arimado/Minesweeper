@@ -174,9 +174,7 @@
 				var $cell = $('[data-row="' + cell.row + '"][data-column=' + cell.column + ']');
 
 				//get cell contents 
-				// var cellText = 'c' +  cell.column + ', r' + cell.row;
-
-				 var cellText = '';
+				var cellText = 'c' +  cell.column + ', r' + cell.row;
 				if (cell.mine) {
 					cellText += '<br />*'; 
 				}
@@ -234,6 +232,8 @@
 		console.log(cell); 
 
 		// ------------------------------------------------------------
+
+
 
 		// ------------------------------------------------------------
 
