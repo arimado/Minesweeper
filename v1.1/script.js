@@ -132,7 +132,7 @@
 
 	MINESWEEPER.DATA.sweepMines = function(board, w, h) {
 		
-		var groupCounter = 1; 
+		var groupCounter = 0; 
 
 		var rules = function(board, cell, rowNum, column, cellProperty) {
 
@@ -151,7 +151,9 @@
 					MINESWEEPER.DATA.checkAdjacentMines(board, cell, w, h, 'sensor', rules);
 					console.log(cell.group);
 					groupCounter++; 
-				} 
+				} else {
+					
+				}
 			});
 		});
 
