@@ -30,4 +30,15 @@
 	right: 4px;
 }
 
+[data-group]:after {
+	position: absolute;
+	color: blue;
+	content: attr(data-group);
+	bottom: 0px;
+	left: 4px;
+	font-weight: bold;
+}
+
+
+
 

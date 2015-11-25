@@ -131,19 +131,27 @@
 	}
 
 	MINESWEEPER.DATA.sweepMines = function(board, w, h) {
+		
+		var groupCounter = 1; 
 
-	
 		var rules = function(board, cell, rowNum, column, cellProperty) {
-			if (board[rowNum -1][column - 1][cellProperty]) {
-				return true;
+
+			if (board[rowNum -1][column - 1][cellProperty] === 0 && board[rowNum -1][column - 1]['mine'] === false) {
+				board[rowNum -1][column - 1].group = groupCounter; 
+				console.log(board[rowNum -1][column - 1]); 
 			} else {
 				return false; 
 			}
-		}
+		} 
 
 		board.forEach(function(row, rowIndex) {
 			row.forEach(function(cell, columnIndex) {
-				cell.sensor = MINESWEEPER.DATA.checkAdjacentMines(board, cell, w, h, 'mine', rules);
+				if(cell.sensor === 0 && cell.mine === false) {
+					console.log('[' + cell.column + ',' + cell.row + '] ----');
+					MINESWEEPER.DATA.checkAdjacentMines(board, cell, w, h, 'sensor', rules);
+					console.log(cell.group);
+					groupCounter++; 
+				} 
 			});
 		});
 
@@ -186,6 +194,10 @@
 
 				if (cell.sensor > 0) {
 					$cell.attr('data-sensor', cell.sensor);
+				}
+
+				if (cell.group) {
+					$cell.attr('data-group', cell.group);
 				}
 			}); 
 			console.log('row----') 
