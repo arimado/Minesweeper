@@ -60,7 +60,7 @@
 
 		MINESWEEPER.DATA.populatMines(board, mines, w, h);
 		MINESWEEPER.DATA.detectMines(board, w, h);
-		MINESWEEPER.DATA.sweepMines(board, w, h);
+		MINESWEEPER.DATA.findEmptyCellGroups(board, w, h);
 
 
 	};
@@ -78,7 +78,7 @@
 
 	};
 
-	MINESWEEPER.DATA.checkAdjacentMines = function(board, cell, w, h, cellProperty, ruleFunction) {
+	MINESWEEPER.DATA.countAdjacentCells = function(board, cell, w, h, cellProperty, ruleFunction) {
 		// Create a grid surrounding this cell
 
 		// Get boundaries
@@ -125,12 +125,12 @@
 
 		board.forEach(function(row, rowIndex) {
 			row.forEach(function(cell, columnIndex) {
-				cell.sensor = MINESWEEPER.DATA.checkAdjacentMines(board, cell, w, h, 'mine', rules); 
+				cell.sensor = MINESWEEPER.DATA.countAdjacentCells(board, cell, w, h, 'mine', rules); 
 			});
 		});
 	} 
 
-	MINESWEEPER.DATA.sweepMines = function(board, w, h) {
+	MINESWEEPER.DATA.findEmptyCellGroups = function(board, w, h) {
 		
 		var groupCounter = 1; 
 
@@ -155,11 +155,10 @@
 				groupArray = [];
 				if(cell.sensor === 0 && cell.mine === false) {
 					console.log('[' + cell.column + ',' + cell.row + '] ----');
-					MINESWEEPER.DATA.checkAdjacentMines(board, cell, w, h, 'sensor', rules);
+					MINESWEEPER.DATA.countAdjacentCells(board, cell, w, h, 'sensor', rules);
 					if(typeof cell.group == 'undefined') {
 						groupCounter++; 
 					}
-
 					groupArray.push(cell)
 					cell.groups = groupArray; 
 					
@@ -168,6 +167,18 @@
 				}
 			});
 		});
+
+
+		board.forEach(function(row, rowIndex) {
+			row.forEach(function(cell, columnIndex) {
+				var currentGroup;
+				if(typeof cell.group !== undefined && ) {
+
+				}
+			});
+		});
+
+
 
 	}
 
@@ -236,7 +247,6 @@
 			}
 
 			console.log(tempString); 
-			//pass the cell into a sweepMines function  
 
 			
 		}); 
