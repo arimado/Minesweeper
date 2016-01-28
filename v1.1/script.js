@@ -61,7 +61,7 @@
 		MINESWEEPER.DATA.populatMines(board, mines, w, h);
 		MINESWEEPER.DATA.detectMines(board, w, h);
 		MINESWEEPER.DATA.findEmptyCellGroups(board, w, h);
-
+		MINESWEEPER.DATA.findAdjacentCellGroups(board, w, h);
 
 	};
 
@@ -134,9 +134,6 @@
 		
 		var groupCounter = 1; 
 
-		var groupArray = []; 
-		
-
 		var rules = function(board, cell, rowNum, column, cellProperty) {
 			if (board[rowNum -1][column - 1][cellProperty] === 0 && board[rowNum -1][column - 1]['mine'] === false) {
 				board[rowNum -1][column - 1].group = groupCounter;  
@@ -169,16 +166,60 @@
 		});
 
 
+
+
+	}
+
+	MINESWEEPER.DATA.findAdjacentCellGroups = function(board, w, h) {
+
+
+			//loop through cells and append to an 'cellGroups' array 
+
+		//then forEach cellgroup 
+			//do a sweep of of all adjacent cells that are NOT different groups 
+				//add a groupAOE property, with value of closest 
+
+		//event
+			//reveal all cells that have a group value and groupAOE value of 
+
+		var groupArray = []; 
+
+
 		board.forEach(function(row, rowIndex) {
 			row.forEach(function(cell, columnIndex) {
-				var currentGroup;
-				if(typeof cell.group !== undefined && ) {
+				var currentGroup; 
 
-				}
+				if(cell.group === parseInt(cell.group, 10)) {
+					groupArray.push(cell.group); 
+				} 
+
 			});
 		});
 
+<<<<<<< HEAD
 	}
+=======
+
+		var uniqueGroup = groupArray.filter(function(elem, index, self) {
+    		return index == self.indexOf(elem);
+		})
+
+		console.log(uniqueGroup);
+
+		uniqueGroup.forEach(function(group, index) {
+
+			board.forEach(function(row, rowIndex) {
+				row.forEach(function(cell, columnIndex) {
+
+			});
+		});
+
+		})
+
+
+	};	
+
+>>>>>>> d773f2d53683ef5929637bd87e65841844725767
 
 
 	MINESWEEPER.DATA.updateCell = function() {
@@ -200,6 +241,9 @@
 
 	MINESWEEPER.RENDER.paintBoard = function($board) {
 		// Celltext belongs in the paint function!
+
+		var statusBox = 
+
 		MINESWEEPER.DATA.board.forEach(function(row){
 			row.forEach(function(cell){
 
@@ -209,7 +253,7 @@
 				//get cell contents 
 				var cellText = 'c' +  cell.column + ', r' + cell.row;
 				if (cell.mine) {
-					cellText += '<br />*'; 
+					cellText += '<br />X'; 
 				}
 
 				//put cell contents inside cell 
@@ -217,11 +261,14 @@
 
 				if (cell.sensor > 0) {
 					$cell.attr('data-sensor', cell.sensor);
+					$cell.attr('data-group', cell.group).addClass('sensorCell'); 
 				}
 
 				if (cell.group) {
 					$cell.attr('data-group', '_' + cell.group + '_');
+					$cell.attr('data-group', cell.group).addClass('emptyCell');
 				}
+
 			}); 
 			console.log('row----') 
 		}); 
@@ -262,7 +309,7 @@
 
 }());
 
-MINESWEEPER.EVENTS.init('#game1', 9, 9, 20); 
+MINESWEEPER.EVENTS.init('#game1', 8, 8, 20); 
 
 
 
